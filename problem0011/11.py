@@ -20,14 +20,19 @@ grid = [( 8, 2,22,97,38,15, 0,40, 0,75, 4, 5, 7,78,52,12,50,77,91, 8),
         (01,70,54,71,83,51,54,69,16,92,33,48,61,43,52, 1,89,19,67,48)]
 		
 biggest = 0;
-for y in range(len(grid)):
-    t = grid[y];
-    for x in range(len(t)):
-        horiz = 0 if x < 3 else t[x-3] * t[x-2] * t[x-1] * t[x]
-        vert = 0 if y < 3 else grid[y-3][x] * grid[y-2][x] * grid[y-1][x] * grid[y][x]
+for y in range(len(grid)-3):
+    for x in range(len(grid[y])-3):
+        horiz = grid[y][x] * grid[y][x+1] * grid[y][x+2] * grid[y][x+3]
+        vert = grid[y][x] * grid[y+1][x] * grid[y+2][x] * grid[y+3][x]
+        diag_r = grid[y][x] * grid[y+1][x+1] * grid[y+2][x+2] * grid[y+3][x+3]
+        diag_l = grid[y][x+3] * grid[y+1][x+2] * grid[y+2][x+1] * grid[y+3][x]
         if horiz > biggest:
             biggest = horiz
         if vert > biggest:
             biggest = vert
+        if diag_r > biggest:
+            biggest = diag_r
+        if diag_l > biggest:
+            biggest = diag_l
 
 print biggest
